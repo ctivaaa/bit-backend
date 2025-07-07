@@ -19,7 +19,7 @@ server.use("/libros", librosRouter)
 
 
 server.get("/", (req, res)=>{
-res.status(204).send()
+res.send(`libros en ${host}:${port}/libros`)
 })
 
 
