@@ -15,6 +15,9 @@ const libroSchema = new Schema ({
     }, 
     unidades: {
         type: Number
+    },
+    _id: {
+        type: Number
     }
 },{versionKey:false, timestamps: true}
 )

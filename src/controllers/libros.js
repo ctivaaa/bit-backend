@@ -3,13 +3,14 @@ import libroModel from "../models/libro.js"
 const librosController = {
     create: async (req, res)=>{
 try {
-    const {titulo, autor, calcetin, valor, unidades} = req.body
+    const {titulo, autor, calcetin, valor, unidades, _id} = req.body
     const newLibro = new libroModel ({
         titulo,
         autor,
         calcetin,
         valor,
         unidades,
+        _id,
     })
     const libroCreado = await newLibro.save()
     res.status(201).json({message: "libro creado satisfactoriamente", data: libroCreado })
@@ -38,7 +39,7 @@ try {
 try {
     const {id} = req.params
     const libro = await libroModel.findById(id)
-    res.status(302).json({message: "libro fue leido por id satisfactoriamente", data: libro })
+    res.status(200).json({message: "libro fue leido por id satisfactoriamente", data: libro })
 } catch (error) {
     res.status(404).json({message: "libro no fue leido por id satisfactoriamente", data: error.message })
 }
@@ -49,9 +50,9 @@ try {
     update: async (req, res)=>{
 try {
     const {id} = req.params;
-    const {titulo, autor, calcetin, valor, unidades} = req.body
+    const {titulo, autor, calcetin, valor, unidades, _id} = req.body
     const libroActualizado = await libroModel.findByIdAndUpdate(id, {
-        titulo, autor, calcetin, valor, unidades
+        titulo, autor, calcetin, valor, unidades, _id
     })
     res.status(200).json({message: "libro fue actualizado satisfactoriamente", data: libroActualizado })
 } catch (error) {
@@ -68,8 +69,18 @@ try {
     const libroEliminado = await libroModel.findByIdAndDelete(id)
     res.status(200).json({message: "libro eliminado satisfactoriamente", data: libroEliminado })
 } catch (error) {
-    res.status(304).json({message: "libro no fue eliminado satisfactoriamente", data: error.message })
+    res.status(400).json({message: "libro no fue eliminado satisfactoriamente", data: error.message })
 }
-}
+},
+
+
+
+
+
+
+
+
+
+
 };
 export default librosController
